@@ -38,6 +38,7 @@
 		274A49BA199A6E2F00D3A8F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274A49B9199A6E2F00D3A8F1 /* StoreKit.framework */; };
 		274A49BC199A6E3D00D3A8F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274A49BB199A6E3D00D3A8F1 /* SystemConfiguration.framework */; };
 		274A49C0199A701B00D3A8F1 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274A49BF199A701B00D3A8F1 /* Accounts.framework */; };
+		27B635AE199BB860002A09F5 /* ViewTweetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B635AD199BB860002A09F5 /* ViewTweetVC.m */; };
 		C613839D34E045D8889E2C78 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F487FF67499E45049BA6CD88 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -77,8 +78,8 @@
 		274A4999199A5FA400D3A8F1 /* swipe_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_button.png; sourceTree = "<group>"; };
 		274A499E199A601D00D3A8F1 /* TLANewTweetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLANewTweetVC.h; sourceTree = "<group>"; };
 		274A499F199A601D00D3A8F1 /* TLANewTweetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLANewTweetVC.m; sourceTree = "<group>"; };
-		274A49A0199A601D00D3A8F1 /* TLATweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLATweetCell.h; sourceTree = "<group>"; };
-		274A49A1199A601D00D3A8F1 /* TLATweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLATweetCell.m; sourceTree = "<group>"; };
+		274A49A0199A601D00D3A8F1 /* TLATweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLATweetCell.h; path = TweetLike/TLATweetCell.h; sourceTree = "<group>"; };
+		274A49A1199A601D00D3A8F1 /* TLATweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLATweetCell.m; path = TweetLike/TLATweetCell.m; sourceTree = "<group>"; };
 		274A49A2199A601D00D3A8F1 /* TLATweetsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLATweetsTVC.h; sourceTree = "<group>"; };
 		274A49A3199A601D00D3A8F1 /* TLATweetsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLATweetsTVC.m; sourceTree = "<group>"; };
 		274A49A8199A616A00D3A8F1 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -94,6 +95,8 @@
 		274A49BB199A6E3D00D3A8F1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		274A49BD199A6FE400D3A8F1 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		274A49BF199A701B00D3A8F1 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		27B635AC199BB860002A09F5 /* ViewTweetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewTweetVC.h; path = ../ViewTweetVC.h; sourceTree = "<group>"; };
+		27B635AD199BB860002A09F5 /* ViewTweetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewTweetVC.m; path = ../ViewTweetVC.m; sourceTree = "<group>"; };
 		D626039A8D3C4B87B94D44D8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F487FF67499E45049BA6CD88 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -235,16 +238,27 @@
 		274A49A7199A602000D3A8F1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				27B635AC199BB860002A09F5 /* ViewTweetVC.h */,
+				27B635AD199BB860002A09F5 /* ViewTweetVC.m */,
 				274A4975199A5F7E00D3A8F1 /* TLAViewController.h */,
 				274A4976199A5F7E00D3A8F1 /* TLAViewController.m */,
-				274A49A0199A601D00D3A8F1 /* TLATweetCell.h */,
-				274A49A1199A601D00D3A8F1 /* TLATweetCell.m */,
 				274A49A2199A601D00D3A8F1 /* TLATweetsTVC.h */,
 				274A49A3199A601D00D3A8F1 /* TLATweetsTVC.m */,
 				274A499E199A601D00D3A8F1 /* TLANewTweetVC.h */,
 				274A499F199A601D00D3A8F1 /* TLANewTweetVC.m */,
+				27B635AB199BB552002A09F5 /* TweetsTVC */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		27B635AB199BB552002A09F5 /* TweetsTVC */ = {
+			isa = PBXGroup;
+			children = (
+				274A49A0199A601D00D3A8F1 /* TLATweetCell.h */,
+				274A49A1199A601D00D3A8F1 /* TLATweetCell.m */,
+			);
+			name = TweetsTVC;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +400,7 @@
 			files = (
 				274A4977199A5F7E00D3A8F1 /* TLAViewController.m in Sources */,
 				274A49A6199A601D00D3A8F1 /* TLATweetsTVC.m in Sources */,
+				27B635AE199BB860002A09F5 /* ViewTweetVC.m in Sources */,
 				274A4971199A5F7E00D3A8F1 /* TLAAppDelegate.m in Sources */,
 				274A496D199A5F7E00D3A8F1 /* main.m in Sources */,
 				274A49A4199A601D00D3A8F1 /* TLANewTweetVC.m in Sources */,

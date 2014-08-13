@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TLATweetCell : UITableViewCell
-
+@class PFObject;
+@protocol TLATweetCellDelegate;
+@interface TLATweetCell: UITableViewCell
+@property (nonatomic) PFObject* tweet;
 @property (weak, nonatomic) IBOutlet UILabel *heartCountLabel;
 @property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
-@property (nonatomic) NSDictionary* tweet;
 - (IBAction)heartClicked:(id)sender;
+@property (nonatomic, assign) id <TLATweetCellDelegate> delegate;
+
+@end
+
+@protocol TLATweetCellDelegate <NSObject>
+-(void)heartsUpdated;
 
 @end

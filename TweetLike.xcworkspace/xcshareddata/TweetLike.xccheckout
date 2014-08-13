@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>FB61CD76-FB97-41ED-93EE-19E3B3565A2D</string>
+	<string>6BD1AD3B-C2D4-4E85-97C5-44D764068013</string>
 	<key>IDESourceControlProjectName</key>
 	<string>TweetLike</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B0D276CC-B3BE-4991-94A5-FA4B5609DAD7</key>
-		<string>https://github.com/schwaebek/iOSbabyapps.git</string>
+		<key>E0F08DD1-465B-4326-8491-62FC4FD22524</key>
+		<string>https://github.com/schwaebek/TweetLike.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TweetLike/TweetLike.xcworkspace</string>
+	<string>TweetLike.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B0D276CC-B3BE-4991-94A5-FA4B5609DAD7</key>
-		<string>../..</string>
+		<key>E0F08DD1-465B-4326-8491-62FC4FD22524</key>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/schwaebek/iOSbabyapps.git</string>
+	<string>https://github.com/schwaebek/TweetLike.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B0D276CC-B3BE-4991-94A5-FA4B5609DAD7</string>
+	<string>E0F08DD1-465B-4326-8491-62FC4FD22524</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B0D276CC-B3BE-4991-94A5-FA4B5609DAD7</string>
+			<string>E0F08DD1-465B-4326-8491-62FC4FD22524</string>
 			<key>IDESourceControlWCCName</key>
-			<string>iOSbabyapps</string>
+			<string>TweetLike</string>
 		</dict>
 	</array>
 </dict>

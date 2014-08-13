@@ -19,14 +19,15 @@
 #import "AFNetworking.h"
 #import "TLAAppDelegate.h"
 #import <Parse/Parse.h>
+#import "ViewTweetVC.h"
 
-@interface TLATweetsTVC ()
+@interface TLATweetsTVC () <TLATweetCellDelegate>
 
 @end
 
 @implementation TLATweetsTVC
 {
-    NSMutableArray * tweets;
+    NSMutableArray * tweetLikes;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -34,7 +35,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         
-        tweets = [@[] mutableCopy];
+        tweetLikes = [@[] mutableCopy];
         
         // Custom initialization
         
@@ -63,49 +64,89 @@
         [requestManager GET:@"http://jo2.co/twitter.json" parameters:nil
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         
-                        for (NSDictionary* tweet in responseObject)
-                        {
-                             PFQuery * query = [PFQuery queryWithClassName:@"Tweet"];
-                            
-                            [query whereKey:@"id" equalTo:tweet[@"id"]];
-                            
-                            [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
-                                
-                                
-                                if (objects.count ==0) {
-                                    PFObject * tweet = [PFObject objectWithClassName:@"tweet"];
-                                    [tweet setObject:tweet[@"id"] forKey:@"id"];
-                                    [tweet setObject:tweet[@"text"] forKey:@"text"];
-                                    [tweet setObject:tweet[@"hearts"] forKey:@"hearts"];
-                                    
-                                    [tweet saveInBackground];
-                                }
-                                
-                            }];
-                            
-                        }
-                            
-
-                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        /////
+                        ///// NEW WAY
+                        /////
                         
-                    }];
-        
-    PFQuery * queryForAllParseObjects = [PFQuery queryWithClassName:@"tweet"];
-    [queryForAllParseObjects findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError *error) {
-                            
-                for (NSDictionary * tweet in objects)
+                        
+            PFQuery * queryAll = [PFQuery queryWithClassName:@"Tweet"];
+            [queryAll findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
+                
+                
+                for (NSDictionary * tweet in responseObject)
+                {
+                    BOOL tweetLikeFound = NO;
+                    for (PFObject * tweetLike in objects)
                     {
-                            [tweets addObject:[@{
-                                                     
-                                     @"id": tweet[@"id"],
-                                     @"text": tweet [@"text"],
-                                     @"hearts": @0,
-                                     
-                                     
-                                     } mutableCopy]];
-            }
-            [self.tableView reloadData];
+                        if ([tweet[@"id"] isEqual:tweetLike[@"id"]])
+                        {
+                            tweetLikeFound = YES;
+                            [tweetLikes addObject:tweetLike];
+                        }
+                    }
+                    if (!tweetLikeFound)
+                    {
+                        PFObject * newTweetLike =[PFObject objectWithClassName:@"Tweet"];
+                        
+                        [newTweetLike setObject:tweet[@"id"] forKey:@"id"];
+                        [newTweetLike setObject:tweet[@"text"] forKey:@"text"];
+                        [newTweetLike setObject:@0 forKey:@"hearts"];
+                        [newTweetLike saveInBackground];
+                        
+                        [tweetLikes addObject:newTweetLike];
+
+                        
+                    }
+                }
+                
+                
+                
+                
+                
+                [self.tableView reloadData];
+                        }];
+                        
+                        /////
+                        ///// OLD WAY
+                        /////
+//
+//                        
+//            for (NSDictionary* tweet in responseObject)
+//            {
+//                 PFQuery * query = [PFQuery queryWithClassName:@"Tweet"];
+//                
+//                [query whereKey:@"id" equalTo:tweet[@"id"]];
+//                
+//                [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
+//                    
+//                    
+//                    if (objects.count > 0)
+//                    {
+//                        
+//                        
+//                        
+//                    }else{
+//                        PFObject * tweetLike = [PFObject objectWithClassName:@"tweet"];
+//                        [tweetLike setObject:tweet[@"id"] forKey:@"id"];
+//                        [tweetLike setObject:tweet[@"text"] forKey:@"text"];
+//                        [tweetLike setObject:@0 forKey:@"hearts"];
+//                        [tweetLike saveInBackground];
+//                    }
+//                    
+//                }];
+//                
+//            }
+//            
+//            PFQuery * queryAll = [PFQuery queryWithClassName:@"tweet"];
+//            [queryAll findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
+//                tweets = objects;
+//            }];
+                
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
         }];
+
         
         
     }
@@ -154,21 +195,24 @@
 {
     
     // Return the number of rows in the section.
-    return tweets.count;
+    return tweetLikes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TLATweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    NSDictionary * tweet = tweets[indexPath.row];
+    PFObject * tweet = tweetLikes[indexPath.row];
     
-    cell.heartCountLabel.text =
-        (tweet[@"hearts"]) ? [NSString stringWithFormat:@"%@",tweet[@"hearts"]] : @"0";
-    
+    cell.heartCountLabel.text = (tweet[@"hearts"]) ? [NSString stringWithFormat:@"%@",tweet[@"hearts"]] : @"0";
     cell.tweetTextView.text = tweet[@"text"];
     cell.tweet = tweet;
+    cell.delegate = self;
     return cell;
+}
+-(void) heartsUpdated
+{
+    [self.tableView reloadData];
 }
 
 
@@ -219,8 +263,20 @@
     {
         TLANewTweetVC * newTweetVC = segue.destinationViewController;
         
-        newTweetVC.tweets = tweets;
+        newTweetVC.tweets = tweetLikes;
+        
+    }else if ([segue.identifier isEqualToString:@"showCurrentTweet"])
+    {
+        ViewTweetVC * theTweet = segue.destinationViewController;
+        
+        NSIndexPath * indexPath = [self.tableView indexPathForCell:sender];
+        
+        // get indexPath from cell
+        
+        theTweet.tweet = tweetLikes[indexPath.row];
+       // viewTweetVC.tweet = tweetLikes;
     }
+    
     
     
     // Get the new view controller using [segue destinationViewController].

@@ -7,6 +7,7 @@
 //
 
 #import "TLANewTweetVC.h"
+#import <Parse/Parse.h>
 
 @interface TLANewTweetVC ()<UITextViewDelegate>
 
@@ -39,14 +40,6 @@
     
     origin = self.saveButton.center;
     
-//    UISwipeGestureRecognizer * swipeLeft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeft:)];
-//    swipeLeft.direction=UISwipeGestureRecognizerDirectionLeft;
-//    [self.view addGestureRecognizer:swipeLeft];
-//    
-//    UISwipeGestureRecognizer * swipeRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
-//    swipeRight.direction=UISwipeGestureRecognizerDirectionRight;
-//    [self.view addGestureRecognizer:swipeRight];
-
     // Do any additional setup after loading the view.
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -89,21 +82,19 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches allObjects] [0];
-    CGPoint location = [touch locationInView:self.view];
-    self.saveButton.center = location;
-    
+    self.saveButton.center = [touch locationInView:self.view];
 }
+
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches allObjects] [0];
-    CGPoint location = [touch locationInView:self.view];
-    self.saveButton.center = location;
+    self.saveButton.center = [touch locationInView:self.view];
 }
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches allObjects] [0];
-    CGPoint location = [touch locationInView:self.view];
-    self.saveButton.center = location;
+    self.saveButton.center = [touch locationInView:self.view];
     
     
     BOOL onRed = [self isPoint:self.saveButton.center withInRadius:self.redButton.frame.size.width / 2.0 ofPoint:self.redButton.center];
@@ -115,14 +106,17 @@
     {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (onGreen) {
-        [self.tweets addObject:[@{
-                                  @"hearts" : @0,
-                                  @"text" : self.tweetTextView.text,
-                                  }mutableCopy]];
+        
+        PFObject * newTweetLike = [PFObject objectWithClassName:@"Tweet"];
+        [newTweetLike setObject:@0 forKey:@"hearts"];
+        [newTweetLike setObject:self.tweetTextView.text forKey:@"text"];
+        [newTweetLike setObject:@(arc4random_uniform(100000000)) forKey:@"id"];
+        [newTweetLike saveInBackground];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
+        
         [UIView animateWithDuration:0.2 animations:^{
-           
             self.saveButton.center = origin;
             
         }];
